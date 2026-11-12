@@ -77,7 +77,7 @@
 
   document.addEventListener("click", (event) => {
     if (!primaryNav?.classList.contains("is-open")) return;
-    if (primaryNav.contains(event.target) || menuToggle?.contains(event.target)) return;
+    if (event.composedPath().includes(primaryNav) || event.composedPath().includes(menuToggle)) return;
     setMenuOpen(false);
   });
 
