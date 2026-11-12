@@ -11,8 +11,6 @@
   const menuToggle = document.getElementById("menuToggle");
   const primaryNav = document.getElementById("primaryNav");
   const scrollProgress = document.getElementById("scrollProgress");
-  const photoInput = document.getElementById("photoInput");
-  const portraitImage = document.getElementById("portraitImage");
   const contactForm = document.getElementById("contactForm");
   const formNote = document.getElementById("formNote");
   const currentYear = document.getElementById("currentYear");
@@ -140,43 +138,6 @@
     document.addEventListener("pointerleave", () => {
       pointerGlow.style.opacity = "0";
     });
-  }
-
-  photoInput?.addEventListener("change", () => {
-    const file = photoInput.files?.[0];
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      announcePhoto("Please choose an image file.");
-      photoInput.value = "";
-      return;
-    }
-    if (file.size > 8 * 1024 * 1024) {
-      announcePhoto("Please choose an image smaller than 8 MB.");
-      photoInput.value = "";
-      return;
-    }
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-      if (typeof reader.result === "string" && portraitImage) {
-        portraitImage.src = reader.result;
-        portraitImage.alt = "Your selected profile photo preview";
-        announcePhoto("Photo preview updated. To keep it on the live site, replace the placeholder image in the assets folder.");
-      }
-    });
-    reader.addEventListener("error", () => announcePhoto("Sorry, that image could not be opened. Try another one."));
-    reader.readAsDataURL(file);
-  });
-
-  function announcePhoto(message) {
-    let note = document.getElementById("photoNote");
-    if (!note) {
-      note = document.createElement("p");
-      note.id = "photoNote";
-      note.className = "photo-note";
-      note.setAttribute("aria-live", "polite");
-      document.querySelector(".photo-bottomline")?.after(note);
-    }
-    if (note) note.textContent = message;
   }
 
   contactForm?.addEventListener("submit", (event) => {
